@@ -31,7 +31,7 @@ class LoginController extends Controller
                 $req->session()->put('role', $login->role);
 
               
-          		  return redirect('dashboard');
+          		  return redirect('Dashboard');
              	 }
           	    else
                	{
@@ -50,6 +50,12 @@ class LoginController extends Controller
 }
 public function dashboard()
        {
-    	 return view('Login.dashboard');
+        if(session()->get('role')=='Admin'){
+    	    return view('Login.dashboard');
+         } 
+         else
+         {
+           return redirect('404error');
+         }
         }
       }

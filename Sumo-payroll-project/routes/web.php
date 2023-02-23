@@ -20,7 +20,7 @@ Route::post('Checklogin','LoginController@CheckLogin');
 Route::get('logout','Admincontroller@logout');
       
 Route::group(['middleware'=>'LoginAuthcheck'],function(){
-Route::get('dashboard','LoginController@dashboard');
+Route::get('Dashboard','LoginController@dashboard');
 //Admin
 Route::get('CreateNewEmp','Admincontroller@CreateNewEmployee');
 Route::post('SaveCreateNewEmployee','Admincontroller@SaveCreateNewEmployee');

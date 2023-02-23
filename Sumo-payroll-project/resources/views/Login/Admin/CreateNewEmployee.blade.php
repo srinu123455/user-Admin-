@@ -60,7 +60,7 @@
                      <div class="radio">
                       
                             <span for="gender" style="margin-left: 0px">Gender:<span style="color:red"></span></span>
-                               <input type="radio" name="gender"  value="male" style="margin-left: 15px";><span style="margin-left: 35px";>male</span>
+                               <input type="radio" name="gender"  value="male" style="margin-left: 15px";><span style="margin-left: 35px";>Male</span>
                                <input type="radio" name="gender"  value="female" style="margin-left: 0px";><span style="margin-left: 15px";>Female</span><span style="margin-right:70px"></span>
                                <label for="gender" class="error" style="display:none"></label>
                                @error('gender')

@@ -28,7 +28,7 @@
 
       
          <div class="table-responsive " id="table">
-              <table class="table table-striped table-hover  "  >
+              <table class="table table-striped table-hover  table-bordered"  >
                  <thead style="background: pink">
                      <tr>
                         <th><strong>Id</strong></th>
