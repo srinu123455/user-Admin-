@@ -1,12 +1,6 @@
-
-
-    $(document).ready(function() {
-
-
-  
-     $("#Login").validate({
-                // in 'rules' user have to specify all the constraints for respective fields
-                rules: {
+$(document).ready(function() {
+   $("#Login").validate({
+       rules:{ 
                    
                     name: {
                         required: true,
@@ -19,13 +13,8 @@
                       
                     
               },
-                 
-
-                    
-                   
-              
-                // in 'messages' user have to specify message as per rules
-                messages: {
+ 
+    messages: {
                    
                     
                     name: {
@@ -42,5 +31,5 @@
                 
                 
                      
-});
+    });
 });

@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Session;
-class Authcheck
+
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,14 +15,15 @@ class Authcheck
      */
     public function handle($request, Closure $next)
     {
-       
-        if(!Session()->has('id')){
-       
-        
-           return redirect('http://localhost/laravel-Sumo-project/Sumo-payroll-project/public/login')->with('fail','You have login first');
+         if(session()->get('role')=='Admin'){
+
+         return $next($request);
          }
-         
-        return $next($request);
-    
+         else{
+           return redirect('404error');
+         }
+        
+
+       
     }
 }

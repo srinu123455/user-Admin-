@@ -1,15 +1,12 @@
-
-    $(document).ready(function() {
-
-
-  
+console.log(1);
+$(document).ready(function() {
      $("#CreateEmp").validate({
-                // in 'rules' user have to specify all the constraints for respective fields
-                rules: {
+         rules: {
+
                    
                     EmpId: {
                         required: true,
-                        minlength: 2 //for length of lastname
+                        minlength: 2 
                     },
                     F_Name: {
                         required: true,
@@ -21,24 +18,19 @@
 
                     },
                     gender:{
-                      required: true,
+                         required: true,
                     },
+                   'checkbox[]':{
+                         required: true,
 
-                    
-
-                    checkbox:{
+                    },
+                    Start_Date:{
                         required: true,
-
                     },
                     
-              },
-                 
-
-                    
-                   
-              
-                // in 'messages' user have to specify message as per rules
-                messages: {
+                },
+   
+      messages: {
                    
                     
                     EmpId: {
@@ -62,32 +54,37 @@
 
                     },
 
-                     checkbox: {
-                       required:"Please fill Gender fields"
+                     'checkbox[]': {
+                       required:"Please Select Atleast one Skill"
                          
                        
                     },
+                    Start_Date:{
+                         required:"Please Select Date",
+                    }
+
                   },
-                  errorPlacement: function(error, element) 
-        {
        
-           if( element.is(":radio") ) 
+        errorPlacement: function(error, element) 
+        {
+        if(element.parent('.input-group').length) {
+               error.insertAfter(element.parent());
+            } 
+           else if ( element.is(":radio") ) 
            {
-               error.appendTo(('.radio') );
+               error.appendTo( element.parents('.radio') );
            }
-           else if ( element.is(":checkbox") ) 
-           {console.log(123)
-               error.appendTo( element.parents('.checkbox1') );
+            else if ( element.is(":checkbox") ) 
+           {
+               error.appendTo( element.parents('.checkbox') );
            }
            else 
-           {
+           { 
                error.insertAfter( element );
            }
 
-       
         }
-                   
-                     
-});
+                                 
+    });
 });
 

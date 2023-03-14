@@ -98,26 +98,3 @@
         </div>
     </body>
 </html>
-if(Session::has('role')=='Admin'){
-        return redirect('http://localhost/laravel-Sumo-project/Sumo-payroll-project/public/dashboard');
-
-       }
-       else{
-         return redirect('http://localhost/laravel-Sumo-project/Sumo-payroll-project/public/dashboard');
-       }@else 
- 
-    @include('Login.Non_Admin.Non_Admin')
-   
-    <div><h2>EmployeePage<a href="{{url('logout')}}" style="margin-left: 1300px">logout</a></h2>
-    </div>
-
-        <td>
-                          @php 
-
-                          $Skills =json_decode($EmployeeData->skills);
-                          @endphp
-                   
-                          {{$Skills}}
-                     
-                          
-                     </td>

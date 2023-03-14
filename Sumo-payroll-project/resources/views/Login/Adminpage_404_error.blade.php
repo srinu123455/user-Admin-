@@ -3,12 +3,12 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link href="{{url('css/404error.css')}}" rel="stylesheet">      
+      <link href="{{url('css/404error.css')}}" rel="stylesheet"> 
    </head>
    <body class="body">
       <div>
-         @include('Login.Non_Admin.Non_Admin')
-      </div>     
+         @include('Login.Admin.Admin')
+      </div>
       <form>
          <div class="col col-3 col-4 col-s-3 col-s-5 col- 8 col-12 dis">
             <h1 style="margin:75px 0px 0px 305px;color:#989fa7">404 Error</h1>

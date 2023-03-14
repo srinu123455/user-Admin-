@@ -10,20 +10,20 @@ use App\SaveNewEmployeeData;
 class Admincontroller extends Controller
 {
   	    //View CreateNewEmployee
-     public function CreateNewEmployee(){
+     public function createNewEmployee(){
      	 if(session()->get('role')=='Admin'){
 
           return view('Login.Admin.CreateNewEmployee');
          }
-         else{
+     else{
  	       return redirect('404error');
          }
 
       }
                 
-     public function SaveCreateNewEmployee(Request $req){
+     public function saveCreateNewEmployee(Request $req){
      	if(session()->get('role')=='Admin'){
-          $SaveEmployeeData = new SaveNewEmployeeData;
+          $saveEmployeeData = new SaveNewEmployeeData;
   
            $validator= $req->validate([
            'EmpId' => 'required',
@@ -31,51 +31,52 @@ class Admincontroller extends Controller
            'L_Name' => 'required|min:3|max:255',
            'gender' => 'required',
            'checkbox' => 'required',
-            ]);
-// dd($req->Start_Date);
-             $SaveEmployeeData->EmpId = $req->EmpId;
-             $SaveEmployeeData->F_Name = $req->F_Name;
-             $SaveEmployeeData->L_Name = $req->L_Name;
-             $SaveEmployeeData->gender = $req->gender;
-             $SaveEmployeeData->skills =json_encode($req->checkbox);
-             $SaveEmployeeData->Start_Date = $req->Start_Date;
-             $SaveEmployeeData->created_on =Session()->get('name');
-             $SaveEmployeeData->updated_on =Session()->get('name');
-
-             $SaveEmployeeData->save();
-             return redirect('ViewEmployeeDetails');
-           }
-       else{
- 	           return redirect('404error');
-           }
-
-       
+           ]);
+             $saveEmployeeData->emp_id = $req->EmpId;
+             $saveEmployeeData->f_name = $req->F_Name;
+             $saveEmployeeData->l_name = $req->L_Name;
+             $saveEmployeeData->gender = $req->gender;
+             $saveEmployeeData->skills =json_encode($req->checkbox);
+             $saveEmployeeData->start_date = $req->Start_Date;
+             $saveEmployeeData->created_by =Session()->get('name');
+             $saveEmployeeData->updated_by =Session()->get('name');
+             $saveEmployeeData->save();
+             return redirect('viewEmployeeDetails');
         }
+    else{
+ 	           return redirect('404error');
+        }
+     }
 
-     public function ViewEmployeeDetails(){
+     public function viewEmployeeDetails(){
  	
  	      if(session()->get('role')=='Admin'){
+          $viewEmployeeData = SaveNewEmployeeData::all();
 
- 	         $ViewEmployeeData = SaveNewEmployeeData::all();
-              return view('Login.Admin.EmployeeData',['ViewEmployeeData'=>$ViewEmployeeData]);
+            $viewEmployeeData = SaveNewEmployeeData::paginate(3);
+
+ 	                      return view('Login.Admin.viewEmployeeData',['viewEmployeeData'=>$viewEmployeeData]);
            }
        else{
  	        return redirect('404error');
            }
     }
-    public function Employeeeditdata($id){
+    public function employeeEditData($id){
+
        if(session()->get('role')=='Admin'){
-	        $SaveNewEmployeeData=SaveNewEmployeeData::find($id);
+
+	        $editNewEmployeeData=SaveNewEmployeeData::find($id);
             
-	        return view('Login.Admin.UpdateEmployee',compact('SaveNewEmployeeData'));
+	        return view('Login.Admin.UpdateEmployee',compact('editNewEmployeeData'));
+
         }
     else{
  	      return redirect('404error');
        }
   }
- public function UpdateNewEmploye(Request $req,$id){
+ public function updateNewEmploye(Request $req,$id){
  	  if(session()->get('role')=='Admin'){
- 	       $SaveNewEmployeeData =SaveNewEmployeeData::find($id);
+ 	       $updateEmployeeData =SaveNewEmployeeData::find($id);
             // dd($SaveNewEmployeeData->Start_Date);
            $validator= $req->validate([
            'EmpId' => 'required',
@@ -84,21 +85,22 @@ class Admincontroller extends Controller
            'gender' => 'required',
            'checkbox' => 'required',
            ]);
-             $SaveNewEmployeeData->EmpId = $req->EmpId;
-             $SaveNewEmployeeData->F_Name = $req->F_Name;
-             $SaveNewEmployeeData->L_Name = $req->L_Name;
-             $SaveNewEmployeeData->gender = $req->gender;
-             $SaveNewEmployeeData->skills =json_encode($req->checkbox);
-           
-             $SaveNewEmployeeData->Start_Date = $req->Start_Date;
-             $SaveNewEmployeeData->created_on =Session::get('name');
-             $SaveNewEmployeeData->updated_on =Session::get('name');
+             $updateEmployeeData->emp_id = $req->EmpId;
+             $updateEmployeeData->f_name = $req->F_Name;
+             $updateEmployeeData->l_name = $req->L_Name;
+             $updateEmployeeData->gender = $req->gender;
+             $updateEmployeeData->skills =json_encode($req->checkbox);
+             $updateEmployeeData->start_date = $req->Start_Date;
+             // dd($updateEmployeeData->updated_by);
+             // $updateEmployeeData->created_by =Session::get('name');
+             // $updateEmployeeData->updated_by =RegisterData::select('name')->where(name,'=',Session::get('name'))->get();
 
-             $SaveNewEmployeeData->update();
+             $updateEmployeeData->updated_by =Session::get('name');
+             $updateEmployeeData->update();
  
              // $SaveNewEmployeeData=SaveNewEmployeeData::find($id);
               // return view('Login.Admin.EmployeeData',['ViewEmployeeData'=>$ViewEmployeeData]);
-             return Redirect('http://localhost/laravel-Sumo-project/Sumo-payroll-project/public/ViewEmployeeDetails');
+             return Redirect('http://localhost/laravel-Sumo-project/Sumo-payroll-project/public/viewEmployeeDetails');
         }
     else{
  	     return redirect('404error');
@@ -106,10 +108,11 @@ class Admincontroller extends Controller
 
    }
  public function delete($id){
+
        if(session()->get('role')=='Admin'){
-	      $Delete=SaveNewEmployeeData::find($id);
-	      $Delete->delete();
-	           return Redirect('http://localhost/laravel-Sumo-project/Sumo-payroll-project/public/ViewEmployeeDetails');
+	      $delete=SaveNewEmployeeData::find($id);
+	      $delete->delete();
+	           return Redirect('http://localhost/laravel-Sumo-project/Sumo-payroll-project/public/viewEmployeeDetails');
 	      }
 	  else{
  	         return redirect('404error');
@@ -123,12 +126,12 @@ class Admincontroller extends Controller
                 session()->forget('name');
                 session()->forget('role');
 
-            return redirect('http://localhost/laravel-Sumo-project/Sumo-payroll-project/public/Login');
+            return redirect('http://localhost/laravel-Sumo-project/Sumo-payroll-project/public/login');
 
        // }
 
  }
- public function ViewAdminAndNonAdminEmployeeDetails(){
+ public function viewAdminAndNonAdminEmployeeDetails(){
  	if(session()->get('role')=='Admin'){
          $admins = RegisterData::get();
          return view('Login.Admin.ViewUsers',['admins'=>$admins]);
@@ -138,13 +141,29 @@ class Admincontroller extends Controller
       }
  }
 
- public function ViewNonAdminEmployeeDetails(){
+ public function viewNonAdminEmployeeDetails(){
  	 if(session()->get('role')=='NonAdmin'){
-        $Nonadmin = RegisterData::select('*')->where('role','NonAdmin')->get();
+        // $Nonadmin = RegisterData::select('*')->where('role','NonAdmin')->get();
+    $Nonadmin = SaveNewEmployeeData::get();
         return view('Login.Non_Admin.Non_AdminViewEmployee',['Nonadmin'=>$Nonadmin]);
        }
-   else{
- 	return redirect('404error');
+
+       else
+       {
+       	return redirect('adminpage_404_error');
        }
  }
+   // public function Adminpage(){
+   //   if(session()->get('role')=='Admin'){
+   //    return redirect('Adminpage_404_error');
+   //  }
+   //  else if(session()->get('role')=='NonAdmin'){
+   //      return redirect('404_error');
+   //  }
+   //  else{
+   //    return false;
+   //  }
+  
+   //     } 
+
 }

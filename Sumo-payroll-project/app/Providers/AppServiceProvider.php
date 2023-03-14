@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-    }
+      Validator::extend('recaptcha', 'App\\Validators\\ReCaptcha@validate');
+      
+}
 }
